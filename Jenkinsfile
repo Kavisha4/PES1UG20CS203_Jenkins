@@ -1,22 +1,27 @@
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-            sh "make -C main"
-                echo 'Build stage completed'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh "/var/jenkins_home/workspace/PES1UG20CS203-1/main/hello_exec"
-                echo 'Testing stage completed'
-            }
-        }
+pipeline{
+  agent any
+  stages{
+    stage('Build'){
+      steps{
+        sh 'g++ -o task5 task5_code.cpp'
+        build job: 'PES1UG20CS203-1'
+      }
     }
-    post {
-            failure {
-                echo 'Pipeline Failed'
-            }
-        }
+    stage('Test'){
+      steps{
+        sh './task5'
+      }
+    }
+   stage('Deploy'){
+      steps{
+        echo 'Deploying'
+
+      }
+    }
+  }
+  post{
+    failure{
+      echo 'Pipeline failed'
+    }
+  }
 }
